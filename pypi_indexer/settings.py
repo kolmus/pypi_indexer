@@ -56,6 +56,7 @@ except ModuleNotFoundError:
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]  # Instead of your actual secret key
 
+ARCHIVE_DIRECTORY = os.environ["ARCHIVE_DIRECTORY"]
 
 # Application definition
 
@@ -67,6 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pypi_app',
+    'django_archive',
     
 ]
 
