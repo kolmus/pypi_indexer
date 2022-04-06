@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from pypi_app.views import SearchViev
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', SearchViev.as_view())
 ]

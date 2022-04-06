@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/headers.css" rel="stylesheet">
+</head>
+<body>
+    <header class="py-3 mb-4 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+            <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+            <span class="fs-4">Double header</span>
+            </a>
+            
+            <div class="text-end">
+                <form class="d-flex w-100 me-3" method="post">
+                    {% csrf_token %}
+                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="search">
+                    <button type="submit" class="btn btn-outline-primary me-2">Search</button>
+                </form>
+            </div>
+            
+        </div>
+    </header>
+    <main class="container d-flex flex-wrap">
+        {% for item in result %}
+        <div class="bg-light p-5 rounded col-4">
+            <h1>{{  item.title  }}</h1>
+            <p class="lead">{{item.description}}</p>
+            <p class="lead">Author: {{  item.author  }}</p>
+            <a class="btn btn-lg btn-primary" href="/docs/5.1/components/navbar/" role="button">View navbar docs »</a>
+        </div>
+        {% endfor%}
+        
+    </main>
+</body>
+</html>
