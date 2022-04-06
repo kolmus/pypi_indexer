@@ -11,8 +11,12 @@ from pypi_app.models import Item
 
 
 class Command(BaseCommand):
-    def handle(self, *args, **options):
+    """
+    This script fetch .xml file from source and index data into DB.
 
+    Prints result of proces
+    """
+    def handle(self, *args, **options):
         new_items = []
 
         url = "https://pypi.org/rss/packages.xml"
