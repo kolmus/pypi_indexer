@@ -99,7 +99,6 @@ class SearchApiView(APIView):
             result = search(values=search_data)
             if result:
                 data = {"packages": ItemSerializer(result, many=True).data}
-                print("\n\n\n", data, "\n\n\n")
 
                 return Response(data, status=status.HTTP_200_OK)
             else:

@@ -1,8 +1,5 @@
-from ensurepip import version
-from time import timezone
 from django.core.management.base import BaseCommand
 
-import xml.etree.ElementTree as ET
 from datetime import datetime, date
 import pytz
 import requests

@@ -23,85 +23,86 @@ if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
 
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 try:
     DEBUG = os.environ["DEBUG"]
-    ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split(' ')
+    ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split(" ")
 except ModuleNotFoundError:
     DEBUG = True
     ALLOWED_HOSTS = []
 
 
-
 try:
     DATABASES = {
-        'default': {
-            'HOST': os.environ["DB_HOST"],
-            'NAME': os.environ["DB_NAME"],
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'USER': os.environ["DB_USER"],
-            'PASSWORD': os.environ["DB_PASSWORD"],
+        "default": {
+            "HOST": os.environ["DB_HOST"],
+            "NAME": os.environ["DB_NAME"],
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "USER": os.environ["DB_USER"],
+            "PASSWORD": os.environ["DB_PASSWORD"],
         }
     }
 except ModuleNotFoundError:
     DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'PSS_v2_db.sqlite3',
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "PSS_v2_db.sqlite3",
+        }
     }
-}
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]  # Instead of your actual secret key
 
-ARCHIVE_DIRECTORY = os.environ["ARCHIVE_DIRECTORY"]
+ARCHIVE_DIRECTORY = 'pypi_app/management/archive'
+
+# Enable Django admin
+ADMIN_ENABLED = False
+
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'pypi_app',
-    'django_archive',
-    'rest_framework',
-    
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "pypi_app",
+    "django_archive",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'pypi_indexer.urls'
+ROOT_URLCONF = "pypi_indexer.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'pypi_indexer.wsgi.application'
+WSGI_APPLICATION = "pypi_indexer.wsgi.application"
 
 
 # Password validation
@@ -109,16 +110,16 @@ WSGI_APPLICATION = 'pypi_indexer.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -126,9 +127,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'Europe/Warsaw'
+TIME_ZONE = "Europe/Warsaw"
 
 USE_I18N = True
 
@@ -138,9 +139,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

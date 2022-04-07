@@ -35,11 +35,9 @@
         </div>
     </header>
     <main class="container d-flex flex-wrap">
-        {% if result %}
+        {% if search %}
             <h1 class="container">Wyniki Wyszukiwania: </h1>
-        {% else %}
-            <h1 class="container">Brak wyników do pokazania</h1>
-        {% endif %}
+        {%endif%}
         {% for item in result %}
         <div class="bg-light p-5 rounded col-4">
             <h2>{{  item.title  }}</h2>
@@ -55,6 +53,8 @@
 
            <p><a class="btn btn-lg btn-primary" href="{{item.link}}" role="button">Check »</a></p>
         </div>
+        {% empty %}
+        <h1 class="container">Brak wyników do pokazania</h1>
         {% endfor%}
         <div class="container">
             <nav class="d-flex justify-content-center">

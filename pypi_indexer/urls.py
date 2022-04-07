@@ -13,14 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# from django.contrib import admin
+
 from django.urls import path
 
 from pypi_app.views import SearchApiView, SearchViev
-
+from pypi_indexer.settings import ADMIN_ENABLED
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('', SearchViev.as_view()),
-    path('api/', SearchApiView.as_view())
+    path("", SearchViev.as_view()),
+    path("api/", SearchApiView.as_view()),
 ]
+
+if ADMIN_ENABLED:
+    from django.contrib import admin
+
+    urlpatterns.append(path("admin/", admin.site.urls))
