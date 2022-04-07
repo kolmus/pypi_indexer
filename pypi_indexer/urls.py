@@ -16,12 +16,13 @@ Including another URLconf
 
 from django.urls import path
 
-from pypi_app.views import SearchApiView, SearchViev
+from pypi_app.views import SearchApiView, SearchView, DashboardView
 from pypi_indexer.settings import ADMIN_ENABLED
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path("", SearchViev.as_view()),
+    path("", DashboardView.as_view()),
+    path('search/', SearchView.as_view()),
     path("api/", SearchApiView.as_view()),
 ]
 

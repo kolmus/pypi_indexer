@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import View
 from django.db.models import Q
 
-# from django.core.paginator import Paginator
+from django.core.paginator import Paginator
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -10,19 +10,19 @@ from rest_framework import status
 
 from .models import Item
 from .serializers import SearchSerializer, ItemSerializer
+from pypi_indexer.settings import PACKAGES_PER_PAGE
 
-
-def search(values) -> set:
+def search(values) -> list:
     """Search for every word in values in database
 
     Args:
         values (str): words to search separated with space ' '
 
     Returns:
-        set: matched objects of Item model
+        list: matched objects of Item model
     """
     search_values = values.split(" ")
-    result = set()
+    result = []
 
     for value in search_values:
         for item in Item.objects.filter(
@@ -34,20 +34,23 @@ def search(values) -> set:
             | Q(author_name__icontains=value)
             | Q(author_email__icontains=value)
         ):
-            result.add(item)
+            result.append(item)
 
     return result
-
-
-class SearchViev(View):
+class DashboardView(View):
     def get(self, request):
         """
         Main View to show all packages on '/' path
 
         """
-        return render(request, "pypi_app/base.html", {"result": Item.objects.all()})
+        items = Item.objects.all()
+        paginator = Paginator(items, per_page=PACKAGES_PER_PAGE)
+        page = request.GET.get('page')
+        items = paginator.get_page(page)
+        return render(request, "pypi_app/base.html", {"result": items})
 
-    def post(self, request):
+class SearchView(View):
+    def get(self, request):
         """
         View to show search results
 
@@ -55,31 +58,18 @@ class SearchViev(View):
             search (request data): str separated with spaces with words to search
 
         Returns:
-            result: Set with Item objects
+            result: list with Item objects
         """
-        search_data = request.POST["search"]
+        search_data = request.GET["search"]
         if search_data:
             result = search(values=search_data)
         else:
-            result = Item.objects.all()
-        return render(request, "pypi_app/base.html", {"result": result, "search": True})
+            return redirect('/')
+        paginator = Paginator(result, per_page=PACKAGES_PER_PAGE)
+        page = request.GET.get('page')
+        result = paginator.get_page(page)
+        return render(request, "pypi_app/base.html", {"result": result, "search": True, "phrase": search_data.replace(' ', '+')})
 
-
-# class SearchViev(View):
-#     def get(self, request):
-#         items = Item.objects.all()
-#         paginator = Paginator(items, per_page=12)
-#         page = request.GET.get('page')
-#         items = paginator.get_page(page)
-#         return render(request, "pypi_app/base.html", {"result": items})
-
-#     def post(self, request):
-#         search_data = request.POST["search"]
-#         result = search(values=search_data)
-#         paginator = Paginator(result, per_page=9)
-#         page = request.GET.get('page')
-#         result = paginator.get_page(page)
-#         return render(request, "pypi_app/base.html", {"result": result})
 
 
 class SearchApiView(APIView):

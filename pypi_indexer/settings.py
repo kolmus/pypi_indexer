@@ -58,8 +58,10 @@ ARCHIVE_DIRECTORY = 'pypi_app/management/archive'
 
 # Enable Django admin
 ADMIN_ENABLED = False
+
 TEST_ITEMS = 300
 
+PACKAGES_PER_PAGE = 3
 # Application definition
 
 INSTALLED_APPS = [

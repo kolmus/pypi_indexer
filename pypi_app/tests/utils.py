@@ -1,8 +1,7 @@
-from time import time
 from pypi_app.models import Item
 from pypi_indexer.settings import TEST_ITEMS
 from random import randint
-from datetime import datetime, timedelta, date, time
+from datetime import datetime, timedelta, date
 import pytz
 
 from faker import Faker

@@ -1,12 +1,13 @@
 import pytest
 from pypi_app.models import Item
+from pypi_indexer.settings import PACKAGES_PER_PAGE
 
 # Create your tests here.
 @pytest.mark.django_db
 def test_all_packages(client, create_items):
     response = client.get("/")
     assert response.status_code == 200
-    assert len(response.context["result"]) == Item.objects.all().count()
+    assert len(response.context["result"]) == PACKAGES_PER_PAGE
 
 
 @pytest.mark.django_db
@@ -14,7 +15,7 @@ def test_search_packages(client, create_items):
     item = Item.objects.all().order_by("-title").first()
     search = item.title[:3]
 
-    response = client.post("/", {"search": search})
+    response = client.get("/search/", {"search": search})
     assert response.status_code == 200
 
     assert len(response.context["result"]) < Item.objects.all().count()
