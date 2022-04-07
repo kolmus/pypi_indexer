@@ -83,7 +83,7 @@ class SearchViev(View):
 
 
 class SearchApiView(APIView):
-    def get(self, request):
+    def post(self, request):
         """
         API View to show search results
 
