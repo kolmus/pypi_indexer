@@ -9,6 +9,14 @@
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/headers.css" rel="stylesheet">
 </head>
+<style>
+    .alert-light .alert-link {
+        color: #4f5050;
+    }
+    .alert-link {
+        font-weight: 700;
+    }
+</style>
 <body>
     <header class="py-3 mb-4 border-bottom">
         <div class="container d-flex flex-wrap justify-content-center">
@@ -27,15 +35,44 @@
         </div>
     </header>
     <main class="container d-flex flex-wrap">
+        {% if result %}
+            <h1 class="container">Wyniki Wyszukiwania: </h1>
+        {% else %}
+            <h1 class="container">Brak wyników do pokazania</h1>
+        {% endif %}
         {% for item in result %}
         <div class="bg-light p-5 rounded col-4">
-            <h1>{{  item.title  }}</h1>
-            <p class="lead">{{item.description}}</p>
-            <p class="lead">Author: {{  item.author  }}</p>
-            <a class="btn btn-lg btn-primary" href="/docs/5.1/components/navbar/" role="button">View navbar docs »</a>
+            <h2>{{  item.title  }}</h2>
+            <small>version: {{  item.version  }}</small>
+            {% if item.description is not None %}
+            <p>{{item.description}}</p>
+            {% else %}
+            <p>Nie dodano opisu</p>
+            {% endif %}
+            {% if item.author_name is not None %}
+            <cite title="Author">Author: <a href="mailto:{{item.author_email}}" class="alert_link alert-light">{{  item.author_name  }}</a></cite>
+            {% endif %}
+
+           <p><a class="btn btn-lg btn-primary" href="{{item.link}}" role="button">Check »</a></p>
         </div>
         {% endfor%}
-        
+        <div class="container">
+            <nav class="d-flex justify-content-center">
+                <ul class="pagination pagination-lg flex-wrap">
+                    <li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </main>
 </body>
 </html>
