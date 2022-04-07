@@ -1,3 +1,4 @@
+from ensurepip import version
 from time import timezone
 from django.core.management.base import BaseCommand
 
@@ -6,6 +7,7 @@ from datetime import datetime, date
 import pytz
 import requests
 import xmltodict
+from bs4 import BeautifulSoup
 
 from pypi_app.models import Item
 
@@ -16,27 +18,38 @@ class Command(BaseCommand):
 
     Prints result of proces
     """
+
     def handle(self, *args, **options):
         new_items = []
 
         url = "https://pypi.org/rss/packages.xml"
-        response = requests.get(url)
-        data = xmltodict.parse(response.content)["rss"]["channel"]["item"]
+        xml_response = requests.get(url)
+        data = xmltodict.parse(xml_response.content)["rss"]["channel"]["item"]
 
         today = date.today()
 
         for obj in data:
+
             title = obj["title"][:-14]
             link = obj["link"]
+            page = requests.get(link)
+            soup = BeautifulSoup(page.text, "html.parser")
+            version = soup.find_all("h1", {"class": "package-header__name"})[0].get_text().split(" ")[9][:-1]
+
             try:
                 guid = obj["guid"]
             except KeyError:
                 guid = None
             description = obj["description"]
             try:
-                author = obj["author"]
+                author_email = obj["author"]
             except KeyError:
-                author = None
+                author_email = None
+            try:
+                author_name = soup.find_all("a", {"href": f"mailto:{author_email}"})[0].get_text()
+            except IndexError:
+                author_name = None
+
             pub_date = datetime(
                 year=today.year,
                 month=today.month,
@@ -47,15 +60,32 @@ class Command(BaseCommand):
                 microsecond=0,
                 tzinfo=pytz.UTC,
             )
+
             controll_set = Item.objects.filter(
-                title=title, link=link, guid=guid, author=author, description=description, pub_date=pub_date
+                title=title,
+                link=link,
+                guid=guid,
+                author_email=author_email,
+                description=description,
+                pub_date=pub_date,
+                version=version,
+                author_name=author_name,
             )
 
             if controll_set.exists():
                 continue
             else:
                 new_items.append(
-                    Item(title=title, link=link, guid=guid, author=author, description=description, pub_date=pub_date)
+                    Item(
+                        title=title,
+                        version=version,
+                        link=link,
+                        guid=guid,
+                        author_name=author_name,
+                        author_email=author_email,
+                        description=description,
+                        pub_date=pub_date,
+                    )
                 )
 
         # TODO backup db before save to db,
