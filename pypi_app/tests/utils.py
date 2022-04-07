@@ -11,7 +11,6 @@ faker = Faker("en-US")
 
 def create_fake_items():
     new_items = []
-    now = datetime.now().hour
     for i in range(TEST_ITEMS):
         today = datetime(
             tzinfo=pytz.UTC,
@@ -34,3 +33,4 @@ def create_fake_items():
         )
         new_items.append(item)
     created_items = Item.objects.bulk_create(new_items)
+    return created_items

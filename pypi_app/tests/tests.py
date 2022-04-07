@@ -2,6 +2,7 @@ import pytest
 from pypi_app.models import Item
 from pypi_indexer.settings import PACKAGES_PER_PAGE
 
+
 # Create your tests here.
 @pytest.mark.django_db
 def test_all_packages(client, create_items):

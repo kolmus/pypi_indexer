@@ -12,6 +12,7 @@ from .models import Item
 from .serializers import SearchSerializer, ItemSerializer
 from pypi_indexer.settings import PACKAGES_PER_PAGE
 
+
 def search(values) -> list:
     """Search for every word in values in database
 
@@ -37,6 +38,8 @@ def search(values) -> list:
             result.append(item)
 
     return result
+
+
 class DashboardView(View):
     def get(self, request):
         """
@@ -45,9 +48,10 @@ class DashboardView(View):
         """
         items = Item.objects.all()
         paginator = Paginator(items, per_page=PACKAGES_PER_PAGE)
-        page = request.GET.get('page')
+        page = request.GET.get("page")
         items = paginator.get_page(page)
         return render(request, "pypi_app/base.html", {"result": items})
+
 
 class SearchView(View):
     def get(self, request):
@@ -64,12 +68,13 @@ class SearchView(View):
         if search_data:
             result = search(values=search_data)
         else:
-            return redirect('/')
+            return redirect("/")
         paginator = Paginator(result, per_page=PACKAGES_PER_PAGE)
-        page = request.GET.get('page')
+        page = request.GET.get("page")
         result = paginator.get_page(page)
-        return render(request, "pypi_app/base.html", {"result": result, "search": True, "phrase": search_data.replace(' ', '+')})
-
+        return render(
+            request, "pypi_app/base.html", {"result": result, "search": True, "phrase": search_data.replace(" ", "+")}
+        )
 
 
 class SearchApiView(APIView):
