@@ -1,9 +1,22 @@
 # PYPI_indexer
-## Description
+## 1. Description
+Simple Program for indexing changes in packages on PyPi
+## 2. TECH
+Python3.8,
+PostgreSQL
+Django,
+Django REST,
+Django Arhive,
+Requests,
+Xmltodict
+BeautifullSoup
+Pytest,
+Docker,
+Docker-compose,
+Bootstrap tempate (HTML + CSS),
+Faker (exemples in tests),
 
-## TECH
-
-## Installation
+## 3. Installation
 ### System requirements:
 1. Docker
 2. Docker-compose
@@ -18,7 +31,7 @@
 ### First Run:
 1. `docker-compose up -d` - runs all 2 conteiners
 2. `docker-compose run pypi bash ./install.sh` script migrates model of package to database, restores first packages from archive and set cronjob for updating averyday at 23:55
-## Variabes to set
+## 4. Variabes to set
 To set up in `settings.py`:
 
 * `ARCHIVE_DIRECTORY` path to folder to store arhive tar packages
@@ -36,14 +49,18 @@ To set in `.env`:
 * `DB_PASSWORD`= password in database
 
 
-## Available scripts
+## 5. Available scripts
 * `docker-compose run pypi bash ./get_packages.sh` makes new archive and download newes Packages
 * `docker-compose run pypi python manage.py get_new_packages` download newest packages without making archive file => **NOT RECOMENDED**
 * `docker-compose run pypi python manage.py restore_db` restores db with **last** archive package => restorest old data or create again if its lost
 
+## 6. PATHS
+main page path `'/'` or localhost
+
+API available on `/api/` method POST only, requires data: `{'search': x}` where x is word or words separated with 1 space ' ' and *not null*
 
 
-## Unit tests
+### Unit tests
 `docker-compose run pypi pytest`
 
 
