@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  pypi:
+    build: .
+    volumes:
+      - .:/usr/app/
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - "pypi_doc_db"
+    command: python manage.py runserver 0.0.0.0:8000
+
+  pypi_doc_db:
+    image: postgres
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: '${DB_USER}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD}'
+      POSTGRES_DB: '${DB_NAME}'
+
+volumes:
+  postgres_data:

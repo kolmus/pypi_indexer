@@ -22,7 +22,7 @@ from pypi_indexer.settings import ADMIN_ENABLED
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path("", DashboardView.as_view()),
-    path('search/', SearchView.as_view()),
+    path("search/", SearchView.as_view()),
     path("api/", SearchApiView.as_view()),
 ]
 

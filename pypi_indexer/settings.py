@@ -54,14 +54,14 @@ except ModuleNotFoundError:
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]  # Instead of your actual secret key
 
-ARCHIVE_DIRECTORY = 'pypi_app/management/archive'
+ARCHIVE_DIRECTORY = "pypi_app/management/archive"
 
 # Enable Django admin
 ADMIN_ENABLED = False
 
 TEST_ITEMS = 300
 
-PACKAGES_PER_PAGE = 3
+PACKAGES_PER_PAGE = 9
 # Application definition
 
 INSTALLED_APPS = [
