@@ -27,7 +27,7 @@ To set up in `settings.py`:
 * `PACKAGES_PER_PAGE` number of packages on page - for paginator
 
 To set in `.env`:
-* `SECRET_KEY` egzemple: django-insecure-&f76(gy#b#+hsi6yc#(hy-j)y@lc-!8!m4zomn4x3vi!u2y&=h
+* `SECRET_KEY` exemple: django-insecure-&f76(gy#b#+hsi6yc#(hy-j)y@lc-!8!m4zomn4x3vi!u2y&=h
 * `DEBUG` e.g False
 * `DJANGO_ALLOWED_HOSTS` = localhost 127.0.0.1 [::1]
 * `DB_HOST` = pypi_doc_db
@@ -42,6 +42,8 @@ To set in `.env`:
 * `docker-compose run pypi python manage.py restore_db` restores db with **last** archive package => restorest old data or create again if its lost
 
 
-##
+
+## Unit tests
+`docker-compose run pypi pytest`
 
 
