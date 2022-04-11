@@ -26,7 +26,7 @@ Faker (exemples in tests),
 
 `docker-compose up -d` - runs all 2 conteiners:
 1. `pypi_db` =  official image with postgresql
-2. `pypi_` = container with PYPI_indexer
+2. `pypi` = container with PYPI_indexer
 
 ### First Run:
 1. `docker-compose up -d` - runs all 2 conteiners
@@ -51,6 +51,7 @@ To set in `.env`:
 
 ## 5. Available scripts
 * `docker-compose run pypi bash ./get_packages.sh` makes new archive and download newes Packages
+* `docker-compose run pypi python manage.py archive` makes new archive `tar` package without updating db
 * `docker-compose run pypi python manage.py get_new_packages` download newest packages without making archive file => **NOT RECOMENDED**
 * `docker-compose run pypi python manage.py restore_db` restores db with **last** archive package => restorest old data or create again if its lost
 
